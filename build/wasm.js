@@ -50,11 +50,11 @@ Object.defineProperty(module, 'exports', {
 
 let platform = process.env.WASM_PLATFORM
 if (!platform && process.argv[2]) {
-  platform = execSync('docker info -f "{{.OSType}}/{{.Architecture}}"').toString().trim()
+  platform = execSync('podman info -f "{{.Host.OS}}/{{.Host.Arch}}"').toString().trim()
 }
 
-if (process.argv[2] === '--docker') {
-  let cmd = `docker run --rm --platform=${platform.toString().trim()} `
+if (process.argv[2] === '--podman') {
+  let cmd = `podman run --rm --platform=${platform.toString().trim()} `
   if (process.platform === 'linux') {
     cmd += ` --user ${process.getuid()}:${process.getegid()}`
   }
